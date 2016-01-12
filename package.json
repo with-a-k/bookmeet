@@ -1,0 +1,11 @@
+{
+  "name": "bookmeet",
+  "version": "1.0.0",
+  "description": "A simple realtime app for managing appointments.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Erik Butcher",
+  "license": "ISC"
+}
