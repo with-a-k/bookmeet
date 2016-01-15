@@ -7,5 +7,8 @@
     "test": "npm test"
   },
   "author": "Erik Butcher",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "pryjs": "^0.1.3"
+  }
 }
