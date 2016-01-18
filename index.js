@@ -8,19 +8,22 @@ const jsSHA = require('jsSHA');
 var hasher = new jsSHA('SHA-512', 'TEXT');
 
 app.use(express.static('public'));
+app.set('view engine', 'jade');
+
+app.locals.title = "Bookmeet";
 
 var allSchedules = {};
 
 app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, '/public/index.html'));
+  res.render('index');
 });
 
 app.get('/manage/:id', function (req, res) {
-
+	res.sendFile(path.join(__dirname, '/public/manage.html'));
 });
 
 app.get('/book/:id', function (req, res) {
-
+	res.sendFile(path.join(__dirname, '/public/book.html'));
 });
 
 io.on('connection', function (socket) {
