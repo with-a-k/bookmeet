@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const jsSHA = require('jsSHA');
 const pry = require('pryjs');
 var hasher = new jsSHA('SHA-512', 'TEXT');
+var id = 0;
 
 app.use( bodyParser.urlencoded({ extended: true }) );
 app.use(express.static('public'));
@@ -34,7 +35,7 @@ app.post('/schedules', function (req, res) {
 		name: req.body.name,
 		manageId: manageId,
 		bookerId: bookerId,
-		appointments: []
+		appointments: {}
 	}
 	console.log('Redirecting to ' + manageId);
   res.redirect('/manage/' + manageId);
@@ -50,22 +51,27 @@ app.get('/book/:id', function (req, res) {
 
 io.on('connection', function (socket) {
   socket.on('message', function (channel, message) {
-  	console.log('Received message on ' + channel);
   	if(channel.includes('new-slot', 9)) {
   		var schedule = channel.slice(0,8);
-  		var datetime = moment.utc(message['datetime']);
-  		console.log('Creating new slot for ' + channel.slice(0,8) + ' on ' + message['datetime']);
   		var appointment = {
-  			taken: false,
-  			date: datetime
+  			id: id,
+   			taken: false,
+  			date: moment.utc(message['date']),
+  			startmoment: moment.utc(message['startmoment']),
+  			endmoment: moment.utc(message['endmoment']),
+  			notes: message['notes']
   		};
-  		app.locals.allSchedules[schedule]['appointments'].push(appointment);
-  		console.log(app.locals.allSchedules[schedule]['appointments']);
+  		app.locals.allSchedules[schedule]['appointments'][id] = appointment;
+  		id++;
   		io.sockets.emit(schedule, appointment);
+  	} else if(channel.includes('booking', 9)) {
+  		var schedule = channel.slice(0,8);
+  		app.locals.allSchedules[schedule]['appointments'][message['id']].taken = true;
+  		io.sockets.emit(schedule, app.locals.allSchedules[schedule]['appointments'][message['id']]);
   	}
   });
 });
 
 http.listen(process.env.PORT || 3000, function(){
-  console.log('Your server is up and running on Port 3000. Good job!');
+  console.log('Server is up.');
 });

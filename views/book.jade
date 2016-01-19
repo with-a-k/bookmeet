@@ -5,14 +5,22 @@ html(lang="en")
     script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js')
   body
     h1= title
-    h2= "Need to see " + schedule.name + "?"
+    h2.rolekeeper(data-role="booker")= "Need to see " + schedule.name + "?"
 
-    h3= "Book an appointment slot:"
-    ul
+    h3.appointments-header(data-schedule=schedule.manageId)= "Book an appointment slot:"
+    ul.appointments
       each val in schedule.appointments
-        li
-          span=val.date
-          button#book-appointment(type='submit' data-date=val.date)= Book
+        li.appointment(data-id=val.id, data-taken=val.taken)
+          span= val.startmoment.format('MMM D') + ' - ' + val.notes
+          br
+          span= 'Starting ' + val.startmoment.format('h:mm a')
+          br
+          span= 'Ending ' + val.endmoment.format('h:mm a')
+          br
+          if val.taken
+            span= 'Not Available'
+          else
+            button.book-appointment(type='submit' data-id=val.id)= "Book"
 
     script(type='text/javascript' src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(type='text/javascript' src='/socket.io/socket.io.js')

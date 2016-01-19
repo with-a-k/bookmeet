@@ -5,19 +5,33 @@ html(lang="en")
     script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js')
   body
     h1= title
-    h2= "Welcome back, " + schedule.name
+    h2.rolekeeper(data-role="manager")= "Welcome back, " + schedule.name
 
-    h3= "Your current appointments:"
-    ul
+    h3.appointments-header(data-schedule=schedule.manageId)= "Your current appointments:"
+    ul.appointments
       each val in schedule.appointments
-        li
-          span= val.date.format('MMM D YYYY, h:mm a')
+        li.appointment(data-id=val.id, data-taken=val.taken)
+          span= val.startmoment.format('MMM D') + ' - ' + val.notes
+          br
+          span= 'Starting ' + val.startmoment.format('h:mm a')
+          br
+          span= 'Ending ' + val.endmoment.format('h:mm a')
           br
           span.booker= "Booked? " + val.taken
 
     h3= "Make an appointment slot:"
+    span= 'On date:'
     input#new-appointment-date(type='date')
-    input#new-appointment-time(type='time')
+    br
+    span= 'Starting at:'
+    input#new-appointment-start-time(type='time')
+    br
+    span= 'Ending at:'
+    input#new-appointment-end-time(type='time')
+    br
+    span= "Notes/comments:"
+    input#new-appointment-comments(type='textarea')
+    br
     button#make-new-slot(type='submit' data-for=schedule.manageId)= "Create"
 
     h3= "Share your schedule:"
