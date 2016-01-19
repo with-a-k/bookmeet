@@ -2,11 +2,13 @@ doctype html
 html(lang="en")
   head
     title= title
+    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js')
   body
     h1= title
     h2= "Enter your name to start your schedule:"
-    input.new-schedule-name(type='text')
-    button.new-schedule= "Start"
+    form(name="new-schedule", method='post', action='/schedules')
+      input.new-schedule-name(type='text', name='name')
+      input.new-schedule(type='submit')= "Start"
 
     script(type='text/javascript' src='https://code.jquery.com/jquery-2.2.0.min.js')
     script(type='text/javascript' src='/socket.io/socket.io.js')

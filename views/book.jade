@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+  head
+    title= title
+    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js')
+  body
+    h1= title
+    h2= "Need to see " + schedule.name + "?"
+
+    h3= "Book an appointment slot:"
+    ul
+      each val in schedule.appointments
+        li
+          span=val.date
+          button#book-appointment(type='submit' data-date=val.date)= Book
+
+    script(type='text/javascript' src='https://code.jquery.com/jquery-2.2.0.min.js')
+    script(type='text/javascript' src='/socket.io/socket.io.js')
+    script(type='text/javascript' src='/application.js')

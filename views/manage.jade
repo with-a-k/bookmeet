@@ -1,0 +1,31 @@
+doctype html
+html(lang="en")
+  head
+    title= title
+    script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js')
+  body
+    h1= title
+    h2= "Welcome back, " + schedule.name
+
+    h3= "Your current appointments:"
+    ul
+      each val in schedule.appointments
+        li
+          span= val.date.format('MMM D YYYY, h:mm a')
+          br
+          span.booker= "Booked? " + val.taken
+
+    h3= "Make an appointment slot:"
+    input#new-appointment-date(type='date')
+    input#new-appointment-time(type='time')
+    button#make-new-slot(type='submit' data-for=schedule.manageId)= "Create"
+
+    h3= "Share your schedule:"
+    p= "/book/" + schedule.bookerId
+
+    h3= "Get back to this page later:"
+    p= "/manage/" + schedule.manageId
+
+    script(type='text/javascript' src='https://code.jquery.com/jquery-2.2.0.min.js')
+    script(type='text/javascript' src='/socket.io/socket.io.js')
+    script(type='text/javascript' src='/application.js')
