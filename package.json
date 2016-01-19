@@ -12,6 +12,8 @@
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.3",
+    "jquery": "^2.2.0",
+    "jssha": "^2.0.2",
     "moment": "^2.11.1",
     "socket.io": "^1.4.4"
   },
