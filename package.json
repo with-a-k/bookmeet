@@ -4,12 +4,13 @@
   "description": "A simple realtime app for managing appointments.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "post-install": "webpack -p"
   },
   "author": "Erik Butcher",
   "license": "ISC",
   "dependencies": {
-    "pryjs": "^0.1.3"
+    "express": "^4.13.3"
   },
   "repository": "github.com/with-a-k/bookmeet"
 }
