@@ -6,8 +6,7 @@ const moment = require('moment');
 
 const path = require('path');
 const bodyParser = require('body-parser');
-const jsSHA = require('jsSHA');
-const pry = require('pryjs');
+const jsSHA = require('jssha');
 var hasher = new jsSHA('SHA-512', 'TEXT');
 var id = 0;
 
